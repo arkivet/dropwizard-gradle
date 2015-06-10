@@ -17,7 +17,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.github.rholder:gradle-one-jar:1.0.3'
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
     }
 }
 
@@ -28,15 +28,23 @@ repositories {
 dependencies {
     compile (
        'io.dropwizard:dropwizard-core:' + dropwizardVersion,
-       'io.dropwizard:dropwizard-hibernate:' + dropwizardVersion,
-       'io.dropwizard:dropwizard-migrations:' + dropwizardVersion,
        'io.dropwizard:dropwizard-auth:' + dropwizardVersion,
+       'io.dropwizard:dropwizard-assets:' + dropwizardVersion,
     )
+}
+
+configurations {
+    all*.exclude group: 'javax.inject', module: 'javax.inject'
+}
+
+startScripts {
+    mainClassName = project.mainClassName
 }
 
 // Configure the oneJar task
 task oneJar(type: OneJar) {
-    mainClass = mainClassName
+    mainClass = project.mainClassName
+    useStable = false
 }
 
 // Configure the run task to start the Dropwizard service
