@@ -32,3 +32,4 @@ logs/
 # Java class files
 *.class
 /bin
+*~
